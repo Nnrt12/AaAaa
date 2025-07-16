@@ -95,58 +95,6 @@ class NotificationSystem {
     }
     
     /**
-     * Get email template
-     */
-    private function getEmailTemplate($template_key, $variables = []) {
-        // Get template from database
-        $stmt = $this->pdo->prepare("SELECT * FROM email_templates WHERE template_key = ? AND is_active = 1");
-        $stmt->execute([$template_key]);
-        $template = $stmt->fetch();
-        
-        if (!$template) {
-            // Use default template
-            $template = $this->getDefaultTemplate($template_key);
-        }
-        
-        // Replace variables
-        $subject = $template['subject'];
-        $body = $template['body'];
-        
-        foreach ($variables as $key => $value) {
-            $subject = str_replace('{{' . $key . '}}', $value, $subject);
-            $body = str_replace('{{' . $key . '}}', $value, $body);
-        }
-        
-        return [
-            'subject' => $subject,
-            'body' => $body
-        ];
-    }
-    
-    /**
-     * Send welcome email to new user
-     */
-    public function sendWelcomeEmail($user_id, $user_data) {
-        try {
-            $template_vars = [
-                'first_name' => $user_data['first_name'],
-                'last_name' => $user_data['last_name'],
-                'username' => $user_data['username'],
-                'site_name' => getSetting('site_name', 'Star Router Rent'),
-                'site_url' => getSetting('site_url', 'https://star-rent.vip'),
-                'support_email' => getSetting('admin_email', 'support@star-rent.vip')
-            ];
-            
-            $template = $this->getEmailTemplate('welcome', $template_vars);
-            return $this->sendEmail($user_data['email'], $template['subject'], $template);
-            
-        } catch (Exception $e) {
-            error_log('Failed to send welcome email: ' . $e->getMessage());
-            return false;
-        }
-    }
-    
-    /**
      * Get notifications for a user
      */
     public function getUserNotifications($user_id, $limit = 10, $unread_only = false) {

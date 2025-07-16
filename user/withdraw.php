@@ -421,7 +421,6 @@ $recent_withdrawals = $stmt->fetchAll();
                         <div class="form-group">
                             <label>Withdrawal Method</label>
                             <select name="withdrawal_method" required>
-                                <option value="">Select Method</option>
                                 <option value="plisio">Plisio (USDT, BTC, ETH, LTC)</option>
                             </select>
                         </div>

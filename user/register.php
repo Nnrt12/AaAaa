@@ -76,18 +76,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $registration_enabled === 'true') {
                 try {
                     $notifications = new NotificationSystem($pdo);
                     
-                    // Send welcome email with proper template variables
-                    $template_vars = [
+                    // Send welcome email
+                    $user_data = [
+                        'email' => $email,
                         'first_name' => $first_name,
                         'last_name' => $last_name,
-                        'username' => $username,
-                        'site_name' => $site_name,
-                        'site_url' => getSetting('site_url', 'https://star-rent.vip'),
-                        'support_email' => getSetting('admin_email', 'support@star-rent.vip')
+                        'username' => $username
                     ];
                     
-                    $template = $notifications->getEmailTemplate('welcome', $template_vars);
-                    $notifications->sendEmail($email, $template['subject'], $template);
+                    $notifications->sendWelcomeEmail($user_id, $user_data);
                     
                     // Also create in-app notification
                     $notifications->createNotification(
