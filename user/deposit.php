@@ -384,13 +384,13 @@ if (isset($_POST['create_crypto_deposit'])) {
                             <div class="method-icon">₿</div>
                             <div class="method-info">
                                 <h3>Cryptocurrency</h3>
-                                <p>Bitcoin (BTC)</p>
+                                <p>Bitcoin (BTC) and other cryptocurrencies</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="crypto-note">
-                        <p><strong>Note:</strong> Please select BTC, on the next step You can change to other Currency's</p>
+                        <p><strong>Note:</strong> Please select BTC, on the next step you can change to other currencies</p>
                     </div>
                     
                     <div class="form-group">
@@ -412,7 +412,7 @@ if (isset($_POST['create_crypto_deposit'])) {
                     </div>
                     
                     <div class="crypto-note">
-                        <p><strong>Note:</strong> Please select BTC, on the next step You can change to other Currency's</p>
+                        <p><strong>Note:</strong> Please select BTC, on the next step you can change to other currencies</p>
                     </div>
                     
                     <input type="hidden" id="selected-crypto" name="crypto_currency" value="BTC">
@@ -446,6 +446,9 @@ if (isset($_POST['create_crypto_deposit'])) {
                     });
                 });
             });
+            
+            // Auto-select crypto method and show form
+            document.querySelector('.payment-method[data-method="crypto"]').click();
         });
     </script>
 </body>
